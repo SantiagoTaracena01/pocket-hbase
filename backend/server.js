@@ -16,10 +16,7 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
   const response = processCommand(req.body.command)
-  res.json({
-    response: `executed method ${response.method} with status ${response.status}`,
-    result: response.result
-  })
+  res.json(response)
 })
 
 app.listen(process.env.SERVER_PORT, () => console.log('Server started'))

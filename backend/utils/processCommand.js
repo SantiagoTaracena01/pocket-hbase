@@ -1,6 +1,5 @@
 const { create } = require('./create')
-// const { put } = require('./put')
-// const { get } = require('./get')
+const { list } = require('./list')
 
 const processCommand = (command) => {
   const [method, ...args] = command.split(' ')
@@ -8,8 +7,15 @@ const processCommand = (command) => {
   switch (method) {
     case 'create':
       response = create(args[0], args.slice(1))
-    case 'get':
-      response = get(args[0])
+      break
+    case 'list':
+      response = list()
+      break
+    case 'put':
+      response = put(args[0], args[1], args[2], args[3])
+    default:
+      response = { method: 'none', status: 'error', result: 'no such method' }
+      break
   }
   return response
 }

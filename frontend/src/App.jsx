@@ -9,8 +9,8 @@ const App = () => {
   const [response, setResponse] = useState()
 
   const sendRequest = async () => {
-    setResponse('Loading...')
     const response = await axios.post(`${import.meta.env.VITE_API_URL}`, { command: request })
+    console.log('setting response', response.data)
     setResponse(response.data)
   }
 
@@ -24,19 +24,26 @@ const App = () => {
         <input onChange={(event) => setRequest(event.target.value)} />
         <button onClick={sendRequest}>Submit</button>
       </div>
-      <main>
-        {response && (
-          <>
-            <div
-              className="response"
-              style={{ backgroundColor: getBackgroundColor(response) }}
-            >
-              <h2>Response</h2>
-            </div>
-            <div className="response">{response.data}</div>
-          </>
-        )}
-      </main>
+      {response && (
+        <main>
+          <div
+            className="response-status"
+            style={{ backgroundColor: getBackgroundColor(response) }}
+          >
+            <h2>Response</h2>
+            <span>{`Executed method ${response.method} with status ${response.status}`}</span>
+          </div>
+          <div className="response">
+            {response.data && response.data.entries.map((entry) => (
+              <>
+                <h1>{`Row: ${entry.rowkey}`}</h1>
+                <h2>{`Column: ${entry.columnfamily}:${entry.columnqualifier}`}</h2>
+                <span>{`Value: ${entry.value}`}</span>
+              </>
+            ))}
+          </div>
+        </main>
+      )}
     </div>
   )
 }

@@ -1,6 +1,7 @@
 const fs = require('fs')
 
 const create = (tableName, columnFamilies) => {
+  console.log(tableName, columnFamilies)
   const data = {
     tableName: tableName,
     columnFamilies: columnFamilies,
@@ -15,7 +16,6 @@ const create = (tableName, columnFamilies) => {
       console.log(err)
     }
   })
-  console.log('everything is ok')
   return { method: 'create', status: 'ok', data: data.tableName }
 }
 

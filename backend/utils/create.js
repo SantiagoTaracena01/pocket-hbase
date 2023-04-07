@@ -19,7 +19,7 @@ const create = (tableName, columnFamilies) => {
     method: 'create',
     status: 'ok',
     type: 'individual',
-    data: data.tableName,
+    data: `Succesfully created table "${tableName}"`,
   }
 }
 

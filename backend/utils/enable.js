@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const disable = (table) => {
+const enable = (table) => {
 
   const path = `./public/hfile-table-${table}.json`
 
@@ -12,7 +12,7 @@ const disable = (table) => {
   })
 
   const json = JSON.parse(data)
-  json.enabled = false
+  json.enabled = true
 
   fs.writeFile(path, JSON.stringify(json), (err) => {
     if (err) {
@@ -21,11 +21,11 @@ const disable = (table) => {
   })
 
   return {
-    method: 'disable',
+    method: 'enable',
     status: 'ok',
     type: 'individual',
-    data: `Table "${table}" has been disabled`,
+    data: `Table "${table}" has been enabled`,
   }
 }
 
-module.exports = { disable }
+module.exports = { enable }

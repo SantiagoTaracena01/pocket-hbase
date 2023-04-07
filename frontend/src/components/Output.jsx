@@ -6,7 +6,7 @@ const Ouptut = ({ response, type }) => {
     case 'individual':
       return (
         <div className="response">
-          <h1>Succesfully created <span>{response.data}</span></h1>
+          <h1>{response.data}</h1>
         </div>
       )
     case 'array':

@@ -1,25 +1,41 @@
 const fs = require('fs')
+const { list } = require('./list')
 
-const create = (tableName, columnFamilies) => {
+const create = (table, columnFamilies) => {
+
+  const tables = list().data
+
+  if (tables.includes(table)) {
+    return {
+      method: 'create',
+      status: 'error',
+      type: 'individual',
+      data: `Table "${table}" already exists`,
+    }
+  }
+
   const data = {
-    tableName: tableName,
+    tableName: table,
     columnFamilies: columnFamilies,
     enabled: true,
     created: new Date().toISOString(),
     updated: new Date().toISOString(),
     entries: [],
   }
-  const path = `./public/hfile-table-${tableName}.json`
+
+  const path = `./public/hfile-table-${table}.json`
+
   fs.writeFile(path, JSON.stringify(data), (err) => {
     if (err) {
       console.log(err)
     }
   })
+
   return {
     method: 'create',
     status: 'ok',
     type: 'individual',
-    data: `Succesfully created table "${tableName}"`,
+    data: `Succesfully created table "${table}"`,
   }
 }
 

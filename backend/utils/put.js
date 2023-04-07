@@ -1,13 +1,22 @@
 const fs = require('fs')
+const { list } = require('./list')
 
-const put = (tableName, rowKey, columnInfo, value) => {
+const put = (table, rowKey, columnInfo, value) => {
 
-  const [columnFamily, columnQualifier] = columnInfo
-    .replace('<', '')
-    .replace('>', '')
-    .split(':')
+  const tables = list().data
 
-  const path = `./public/hfile-table-${tableName}.json`
+  if (!tables.includes(table)) {
+    return {
+      method: 'disable',
+      status: 'error',
+      type: 'individual',
+      data: `Table "${table}" does not exist`,
+    }
+  }
+
+  const [columnFamily, columnQualifier] = columnInfo.split(':')
+
+  const path = `./public/hfile-table-${table}.json`
 
   const data = fs.readFileSync(path, 'utf8', (err, data) => {
     if (err) {
@@ -18,12 +27,21 @@ const put = (tableName, rowKey, columnInfo, value) => {
 
   const json = JSON.parse(data)
 
+  if (!json.columnFamilies.includes(columnFamily)) {
+    return {
+      method: 'put',
+      status: 'error',
+      type: 'individual',
+      data: `Column family "${columnFamily}" does not exist in table "${table}"`,
+    }
+  }
+
   if (!json.enabled) {
     return {
       method: 'put',
       status: 'error',
       type: 'individual',
-      data: `Table "${tableName}" is disabled`,
+      data: `Table "${table}" is disabled`,
     }
   }
 

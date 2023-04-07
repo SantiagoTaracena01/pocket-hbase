@@ -1,5 +1,6 @@
 const { create } = require('./create')
 const { list } = require('./list')
+const { disable } = require('./disable')
 const { put } = require('./put')
 const { get } = require('./get')
 
@@ -14,6 +15,9 @@ const processCommand = (command) => {
     case 'list':
       response = list()
       break
+    case 'disable':
+      response = disable(args[0])
+      break
     case 'put':
       response = put(args[0], args[1], args[2], args[3])
       break
@@ -24,6 +28,7 @@ const processCommand = (command) => {
       response = { method: 'none', status: 'error', data: 'no such method' }
       break
   }
+  console.log('response', response)
   return response
 }
 

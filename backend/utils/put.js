@@ -17,6 +17,16 @@ const put = (tableName, rowKey, columnInfo, value) => {
   })
 
   const json = JSON.parse(data)
+
+  if (!json.enabled) {
+    return {
+      method: 'put',
+      status: 'error',
+      type: 'individual',
+      data: `Table "${tableName}" is disabled`,
+    }
+  }
+
   const entryToUpdate = json.entries.find((entry) => entry.rowkey === rowKey && entry.columnfamily === columnFamily && entry.columnqualifier === columnQualifier)
   let entryToReturn = entryToUpdate
 

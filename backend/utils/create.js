@@ -1,7 +1,6 @@
 const fs = require('fs')
 
 const create = (tableName, columnFamilies) => {
-  console.log(tableName, columnFamilies)
   const data = {
     tableName: tableName,
     columnFamilies: columnFamilies,

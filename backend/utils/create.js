@@ -18,8 +18,8 @@ const create = (table, columnFamilies) => {
     tableName: table,
     columnFamilies: columnFamilies,
     enabled: true,
-    created: new Date().toISOString(),
-    updated: new Date().toISOString(),
+    created: new Date().getTime(),
+    updated: new Date().getTime(),
     entries: [],
   }
 

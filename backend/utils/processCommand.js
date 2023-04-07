@@ -6,11 +6,29 @@ const { is_enabled } = require('./is_enabled')
 
 const { put } = require('./put')
 const { get } = require('./get')
+const { del } = require('./del')
 
 const processCommand = (command) => {
+
   const method = command.split(' ')[0]
+  const stringArgs = command.replace(`${method} `, '')
+
+  if ((method !== 'list') && (method === stringArgs)) {
+    return {
+      method: 'none',
+      status: 'error',
+      type: 'individual',
+      data: `Can't execute command "${command}" with no arguments`,
+    }
+  }
+
   const args = command.replace(`${method} `, '').split(', ')
-  let response = { method: 'none', status: 'ok', result: 'no result' }
+  let response = {
+    method: 'none',
+    status: 'ok',
+    result: 'no result'
+  }
+
   switch (method) {
     case 'create':
       response = create(args[0], args.slice(1))
@@ -33,10 +51,20 @@ const processCommand = (command) => {
     case 'get':
       response = get(args[0], args[1])
       break
+    case 'delete':
+      response = del(args[0], args[1], args.slice(2))
+      break
     default:
-      response = { method: 'none', status: 'error', data: 'no such method' }
+      response = {
+        method: 'none',
+        status: 'error',
+        type: 'individual',
+        data: `Method "${method}" not found`
+      }
       break
   }
+
+  console.log('response', response)
   return response
 }
 

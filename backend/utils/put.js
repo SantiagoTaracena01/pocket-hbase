@@ -45,22 +45,30 @@ const put = (table, rowKey, columnInfo, value) => {
     }
   }
 
+  json.updated = new Date().getTime()
+
   const entryToUpdate = json.entries.find((entry) => entry.rowkey === rowKey && entry.columnfamily === columnFamily && entry.columnqualifier === columnQualifier)
   let entryToReturn = entryToUpdate
 
   if (entryToUpdate) {
+
     const indexToRemove = json.entries.indexOf(entryToUpdate)
     json.entries.splice(indexToRemove, 1)
     entryToUpdate.value = value
+    entryToUpdate.timestamp = new Date().getTime()
     json.entries.push(entryToUpdate)
+
   } else {
+
     entryToReturn = {
       rowkey: rowKey,
       columnfamily: columnFamily,
       columnqualifier: columnQualifier,
       value: value,
+      timestamp: new Date().getTime(),
     }
-    json.entries.push(entryToReturn) 
+
+    json.entries.push(entryToReturn)
   }
 
   fs.writeFile(path, JSON.stringify(json), (err) => {

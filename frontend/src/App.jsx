@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import Output from './components/Output'
 import getBackgroundColor from './utils/getBackgroundColor'
 import './styles/app.sass'
 
@@ -10,7 +11,6 @@ const App = () => {
 
   const sendRequest = async () => {
     const response = await axios.post(`${import.meta.env.VITE_API_URL}`, { command: request })
-    console.log('setting response', response.data)
     setResponse(response.data)
   }
 
@@ -33,15 +33,10 @@ const App = () => {
             <h2>Response</h2>
             <span>{`Executed method ${response.method} with status ${response.status}`}</span>
           </div>
-          <div className="response">
-            {response.data && response.data.entries.map((entry) => (
-              <>
-                <h1>{`Row: ${entry.rowkey}`}</h1>
-                <h2>{`Column: ${entry.columnfamily}:${entry.columnqualifier}`}</h2>
-                <span>{`Value: ${entry.value}`}</span>
-              </>
-            ))}
-          </div>
+          <Output
+            response={response}
+            type={response.type}
+          />
         </main>
       )}
     </div>

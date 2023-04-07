@@ -16,7 +16,12 @@ const create = (tableName, columnFamilies) => {
       console.log(err)
     }
   })
-  return { method: 'create', status: 'ok', data: data.tableName }
+  return {
+    method: 'create',
+    status: 'ok',
+    type: 'individual',
+    data: data.tableName,
+  }
 }
 
 module.exports = { create }

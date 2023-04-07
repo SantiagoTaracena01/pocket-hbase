@@ -17,20 +17,22 @@ const put = (tableName, rowKey, columnInfo, value) => {
   })
 
   const json = JSON.parse(data)
+  const entryToUpdate = json.entries.find((entry) => entry.rowkey === rowKey && entry.columnfamily === columnFamily && entry.columnqualifier === columnQualifier)
+  let entryToReturn = entryToUpdate
 
-  if (json.entries.find((entry) => entry.rowkey === rowKey && entry.columnfamily === columnFamily && entry.columnqualifier === columnQualifier)) {
-    const entryToUpdate = json.entries.find((entry) => entry.rowkey === rowKey && entry.columnfamily === columnFamily && entry.columnqualifier === columnQualifier)
+  if (entryToUpdate) {
     const indexToRemove = json.entries.indexOf(entryToUpdate)
     json.entries.splice(indexToRemove, 1)
     entryToUpdate.value = value
     json.entries.push(entryToUpdate)
   } else {
-    json.entries.push({
+    entryToReturn = {
       rowkey: rowKey,
       columnfamily: columnFamily,
       columnqualifier: columnQualifier,
       value: value,
-    }) 
+    }
+    json.entries.push(entryToReturn) 
   }
 
   fs.writeFile(path, JSON.stringify(json), (err) => {
@@ -39,7 +41,12 @@ const put = (tableName, rowKey, columnInfo, value) => {
     }
   })
 
-  return { method: 'put', status: 'ok', data: json }
+  return {
+    method: 'put',
+    status: 'ok',
+    type: 'table',
+    data: { entries: [entryToReturn] },
+  }
 }
 
 module.exports = { put }

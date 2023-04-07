@@ -7,6 +7,7 @@ const { is_enabled } = require('./is_enabled')
 const { put } = require('./put')
 const { get } = require('./get')
 const { del } = require('./del')
+const { deleteall } = require('./deleteall')
 
 const processCommand = (command) => {
 
@@ -53,6 +54,9 @@ const processCommand = (command) => {
       break
     case 'delete':
       response = del(args[0], args[1], args.slice(2))
+      break
+    case 'deleteall':
+      response = deleteall(args[0], args[1], args.slice(2))
       break
     default:
       response = {

@@ -20,13 +20,20 @@ const Ouptut = ({ response, type }) => {
     case 'table':
       return (
         <div className="output">
-          {response.data && response.data.entries.map((entry) => (
-            <div>
-              <h1>{`Row: ${entry.rowkey}`}</h1>
-              <h2>{`Column: ${entry.columnfamily}:${entry.columnqualifier}`}</h2>
-              <span>{`Value: ${entry.value}`}</span>
-            </div>
-          ))}
+          <div className='table'>
+          <div className='titles'>
+            <h1 className='title'>Row</h1>
+            <h1 className='title'>Column</h1>
+            <h1 className='title'>Value</h1>
+          </div>
+            {response.data && response.data.entries.map((entry) => (
+              <React.Fragment>
+                <div className='grid-item'><h1>{entry.rowkey}</h1></div>
+                <div className='grid-item'><h1>{entry.columnfamily} : {entry.columnqualifier}</h1></div>
+                <div className='grid-item'><h1>{entry.value}</h1></div>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       )
     default:

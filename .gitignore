@@ -56,6 +56,11 @@ bower_components
 build/Release
 
 # Dependency directories
+backend/node_modules
+backend/package-lock.json
+backend/public
+frontend/node_modules
+frontend/package-lock.json
 node_modules/
 jspm_packages/
 

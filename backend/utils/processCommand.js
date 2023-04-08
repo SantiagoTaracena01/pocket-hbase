@@ -3,6 +3,8 @@ const { list } = require('./list')
 const { disable } = require('./disable')
 const { enable } = require('./enable')
 const { is_enabled } = require('./is_enabled')
+const { drop } = require('./drop')
+const { drop_all } = require('./drop_all')
 
 const { put } = require('./put')
 const { get } = require('./get')
@@ -45,6 +47,12 @@ const processCommand = (command) => {
       break
     case 'is_enabled':
       response = is_enabled(args[0])
+      break
+    case 'drop':
+      response = drop(args[0])
+      break
+    case 'drop_all':
+      response = drop_all(args[0])
       break
     case 'put':
       response = put(args[0], args[1], args[2], args[3])

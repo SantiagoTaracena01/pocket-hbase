@@ -25,7 +25,7 @@ const processCommand = (command) => {
     }
   }
 
-  const args = command.replace(`${method} `, '').split(', ')
+  const args = stringArgs.split(',').map((arg) => arg.trim())
   let response = {
     method: 'none',
     status: 'ok',

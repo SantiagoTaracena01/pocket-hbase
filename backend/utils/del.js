@@ -29,8 +29,13 @@ const del = (table, rowKey, args=[]) => {
 
   if (args.length === 0) {
 
+    // ! ATENCIÓN AL ERROR
+    // ! Está borrando todas las entradas como si fuera deleteall.
+    // ! Necesitamos sólo borrar la primera ocurrencia con entry.rowkey === rowKey
+    // ! como si hicieramos json.entries.remove(entryToDelete)
+
     const entriesToDelete = json.entries.find((entry) => entry.rowkey === rowKey)
-    const entriesToKeep = json.entries.find((entry) => entry.rowkey !== rowKey)
+    const entriesToKeep = json.entries.filter((entry) => entry.rowkey !== rowKey)
     json.entries = entriesToKeep
 
     fs.writeFile(path, JSON.stringify(json), (err) => {
@@ -57,9 +62,14 @@ const del = (table, rowKey, args=[]) => {
 
   } else if (args.length === 1) {
 
+    // ! ATENCIÓN AL ERROR
+    // ! Está borrando todas las entradas como si fuera deleteall.
+    // ! Necesitamos sólo borrar la primera ocurrencia con entry.rowkey === rowKey
+    // ! como si hicieramos json.entries.remove(entryToDelete)
+
     const [columnFamily, columnQualifier] = args[0].split(':')
     const entriesToDelete = json.entries.find((entry) => entry.rowkey === rowKey && entry.columnfamily === columnFamily && entry.columnqualifier === columnQualifier)
-    const entriesToKeep = json.entries.find((entry) => entry.rowkey !== rowKey || entry.columnfamily !== columnFamily || entry.columnqualifier !== columnQualifier)
+    const entriesToKeep = json.entries.filter((entry) => entry.rowkey !== rowKey || entry.columnfamily !== columnFamily || entry.columnqualifier !== columnQualifier)
     json.entries = entriesToKeep
 
     fs.writeFile(path, JSON.stringify(json), (err) => {
@@ -86,10 +96,15 @@ const del = (table, rowKey, args=[]) => {
 
   } else if (args.length === 2) {
 
+    // ! ATENCIÓN AL ERROR
+    // ! Está borrando todas las entradas como si fuera deleteall.
+    // ! Necesitamos sólo borrar la primera ocurrencia con entry.rowkey === rowKey
+    // ! como si hicieramos json.entries.remove(entryToDelete)
+
     const [columnFamily, columnQualifier] = args[0].split(':')
     const timestamp = args[1]
     const entriesToDelete = json.entries.find((entry) => entry.rowkey === rowKey && entry.columnfamily === columnFamily && entry.columnqualifier === columnQualifier && entry.timestamp === timestamp)
-    const entriesToKeep = json.entries.find((entry) => entry.rowkey !== rowKey || entry.columnfamily !== columnFamily || entry.columnqualifier !== columnQualifier || entry.timestamp !== timestamp)
+    const entriesToKeep = json.entries.filter((entry) => entry.rowkey !== rowKey || entry.columnfamily !== columnFamily || entry.columnqualifier !== columnQualifier || entry.timestamp !== timestamp)
     json.entries = entriesToKeep
 
     fs.writeFile(path, JSON.stringify(json), (err) => {

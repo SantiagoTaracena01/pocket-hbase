@@ -2,7 +2,6 @@ const fs = require('fs')
 const { list } = require('./list')
 
 const put = (table, rowKey, columnInfo, value) => {
-
   // list().data retorna una lista con las tablas ['users', 'products', ...]
   const tables = list().data
 
@@ -57,12 +56,16 @@ const put = (table, rowKey, columnInfo, value) => {
   json.updated = new Date().getTime()
 
   // Buscar la entrada a actualizar
-  const entryToUpdate = json.entries.find((entry) => entry.rowkey === rowKey && entry.columnfamily === columnFamily && entry.columnqualifier === columnQualifier)
+  const entryToUpdate = json.entries.find(
+    (entry) =>
+      entry.rowkey === rowKey &&
+      entry.columnfamily === columnFamily &&
+      entry.columnqualifier === columnQualifier
+  )
   let entryToReturn = entryToUpdate
 
   // Si existe la entrada, actualizarla
   if (entryToUpdate) {
-
     // Actualización de la entrada (se actualiza el valor y el timestamp nada más)
     const indexToRemove = json.entries.indexOf(entryToUpdate)
     json.entries.splice(indexToRemove, 1)
@@ -70,9 +73,8 @@ const put = (table, rowKey, columnInfo, value) => {
     entryToUpdate.timestamp = new Date().getTime()
     json.entries.push(entryToUpdate)
 
-  // Si no existe la entrada, crearla
+    // Si no existe la entrada, crearla
   } else {
-
     // Creación de la entrada
     entryToReturn = {
       rowkey: rowKey,

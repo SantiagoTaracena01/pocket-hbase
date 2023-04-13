@@ -2,7 +2,6 @@ const fs = require('fs')
 const { list } = require('./list')
 
 const get = (table, rowKey) => {
-
   const tables = list().data
 
   if (!tables.includes(table)) {
@@ -15,7 +14,7 @@ const get = (table, rowKey) => {
   }
 
   const path = `./public/hfile-table-${table}.json`
-  
+
   const data = fs.readFileSync(path, 'utf8', (err, data) => {
     if (err) {
       console.error(err)

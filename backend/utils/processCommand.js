@@ -12,11 +12,10 @@ const { del } = require('./del')
 const { deleteall } = require('./deleteall')
 
 const processCommand = (command) => {
-
   const method = command.split(' ')[0]
   const stringArgs = command.replace(`${method} `, '')
 
-  if ((method !== 'list') && (method === stringArgs)) {
+  if (method !== 'list' && method === stringArgs) {
     return {
       method: 'none',
       status: 'error',
@@ -25,11 +24,15 @@ const processCommand = (command) => {
     }
   }
 
-  const args = stringArgs.split(',').map((arg) => arg.trim().replaceAll('"', '').replaceAll("'", ''))
+  const args = stringArgs
+    .split(',')
+    .map((arg) => arg.trim().replaceAll('"', '').replaceAll("'", ''))
+
   let response = {
     method: 'none',
-    status: 'ok',
-    result: 'no result'
+    status: 'error',
+    type: 'individual',
+    data: 'No result...',
   }
 
   switch (method) {
@@ -71,7 +74,7 @@ const processCommand = (command) => {
         method: 'none',
         status: 'error',
         type: 'individual',
-        data: `Method "${method}" not found`
+        data: `Method "${method}" not found`,
       }
       break
   }

@@ -31,7 +31,7 @@ const App = () => {
             style={{ backgroundColor: getBackgroundColor(response) }}
           >
             <h2>Response</h2>
-            <span>{`Executed method ${response.method} with status ${response.status}`}</span>
+            <p>Executed method <span>"{response.method}"</span> with status <span>"{response.status}"</span></p>
           </div>
           <Output
             response={response}

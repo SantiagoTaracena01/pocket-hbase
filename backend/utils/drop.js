@@ -2,7 +2,6 @@ const fs = require('fs')
 const { list } = require('./list')
 
 const drop = (table) => {
-
   const tables = list().data
 
   if (!tables.includes(table)) {

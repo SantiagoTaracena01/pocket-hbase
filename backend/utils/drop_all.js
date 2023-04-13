@@ -2,7 +2,6 @@ const fs = require('fs')
 const { list } = require('./list')
 
 const drop_all = (regex) => {
-
   const tables = list().data
 
   if (tables.length === 0) {

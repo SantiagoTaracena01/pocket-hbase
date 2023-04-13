@@ -7,7 +7,7 @@ const getBackgroundColor = (response) => {
       case 'error':
         return 'rgb(220, 0, 0)'
       default:
-        return 'rgb(220, 200, 0)'
+        return 'rgb(200, 180, 0)'
     }
   }
 }

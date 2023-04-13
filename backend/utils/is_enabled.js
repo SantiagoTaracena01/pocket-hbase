@@ -2,7 +2,6 @@ const fs = require('fs')
 const { list } = require('./list')
 
 const is_enabled = (table) => {
-
   const tables = list().data
 
   if (!tables.includes(table)) {
@@ -29,7 +28,9 @@ const is_enabled = (table) => {
     method: 'is_enabled',
     status: 'ok',
     type: 'individual',
-    data: (json.enabled) ? `Table "${table}" is enabled` : `Table "${table}" is disabled`,
+    data: json.enabled
+      ? `Table "${table}" is enabled`
+      : `Table "${table}" is disabled`,
   }
 }
 

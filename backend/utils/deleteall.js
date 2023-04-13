@@ -1,8 +1,7 @@
 const fs = require('fs')
 const { list } = require('./list')
 
-const deleteall = (table, rowKey, args=[]) => {
-
+const deleteall = (table, rowKey, args = []) => {
   const tables = list().data
 
   if (!tables.includes(table)) {
@@ -28,9 +27,12 @@ const deleteall = (table, rowKey, args=[]) => {
   json.updated = new Date().getTime()
 
   if (args.length === 0) {
-
-    const entriesToDelete = json.entries.filter((entry) => entry.rowkey === rowKey)
-    const entriesToKeep = json.entries.filter((entry) => entry.rowkey !== rowKey)
+    const entriesToDelete = json.entries.filter(
+      (entry) => entry.rowkey === rowKey
+    )
+    const entriesToKeep = json.entries.filter(
+      (entry) => entry.rowkey !== rowKey
+    )
     json.entries = entriesToKeep
 
     fs.writeFile(path, JSON.stringify(json), (err) => {
@@ -54,12 +56,20 @@ const deleteall = (table, rowKey, args=[]) => {
       type: 'individual',
       data: `Succesfully deleted ${entriesToDelete.length} entries from table "${table}"`,
     }
-
   } else if (args.length === 1) {
-
     const [columnFamily, columnQualifier] = args[0].split(':')
-    const entriesToDelete = json.entries.filter((entry) => entry.rowkey === rowKey && entry.columnfamily === columnFamily && entry.columnqualifier === columnQualifier)
-    const entriesToKeep = json.entries.filter((entry) => entry.rowkey !== rowKey || entry.columnfamily !== columnFamily || entry.columnqualifier !== columnQualifier)
+    const entriesToDelete = json.entries.filter(
+      (entry) =>
+        entry.rowkey === rowKey &&
+        entry.columnfamily === columnFamily &&
+        entry.columnqualifier === columnQualifier
+    )
+    const entriesToKeep = json.entries.filter(
+      (entry) =>
+        entry.rowkey !== rowKey ||
+        entry.columnfamily !== columnFamily ||
+        entry.columnqualifier !== columnQualifier
+    )
     json.entries = entriesToKeep
 
     fs.writeFile(path, JSON.stringify(json), (err) => {
@@ -83,13 +93,23 @@ const deleteall = (table, rowKey, args=[]) => {
       type: 'individual',
       data: `Succesfully deleted ${entriesToDelete.length} entries from table "${table}"`,
     }
-
   } else if (args.length === 2) {
-
     const [columnFamily, columnQualifier] = args[0].split(':')
     const timestamp = args[1]
-    const entriesToDelete = json.entries.filter((entry) => entry.rowkey === rowKey && entry.columnfamily === columnFamily && entry.columnqualifier === columnQualifier && entry.timestamp === timestamp)
-    const entriesToKeep = json.entries.filter((entry) => entry.rowkey !== rowKey || entry.columnfamily !== columnFamily || entry.columnqualifier !== columnQualifier || entry.timestamp !== timestamp)
+    const entriesToDelete = json.entries.filter(
+      (entry) =>
+        entry.rowkey === rowKey &&
+        entry.columnfamily === columnFamily &&
+        entry.columnqualifier === columnQualifier &&
+        entry.timestamp === timestamp
+    )
+    const entriesToKeep = json.entries.filter(
+      (entry) =>
+        entry.rowkey !== rowKey ||
+        entry.columnfamily !== columnFamily ||
+        entry.columnqualifier !== columnQualifier ||
+        entry.timestamp !== timestamp
+    )
     json.entries = entriesToKeep
 
     fs.writeFile(path, JSON.stringify(json), (err) => {
@@ -113,9 +133,7 @@ const deleteall = (table, rowKey, args=[]) => {
       type: 'individual',
       data: `Succesfully deleted ${entriesToDelete.length} entries from table "${table}"`,
     }
-
   } else {
-
     return {
       method: 'delete',
       status: 'error',

@@ -14,15 +14,6 @@ const { list } = require('./list')
 const drop_all = (regex) => {
   const tables = list().data
 
-  if (tables.length === 0) {
-    return {
-      method: 'drop_all',
-      status: 'error',
-      type: 'individual',
-      data: `No tables exist`,
-    }
-  }
-
   const re = new RegExp(regex)
   let count = 0
 
@@ -47,7 +38,7 @@ const drop_all = (regex) => {
     method: 'drop_all',
     status: 'ok',
     type: 'individual',
-    data: `Succesfully dropped all tables matching regex "${regex}"`,
+    data: `Succesfully dropped ${count} tables matching regex "${regex}"`,
   }
 }
 

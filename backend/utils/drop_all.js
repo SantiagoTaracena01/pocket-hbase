@@ -1,3 +1,13 @@
+/**
+ * Universidad del Valle de Guatemala
+ * (CC3089) Bases de Datos 2
+ * Proyecto 2 - Pocket HBase
+ * Miembros del grupo 7:
+ *   - Pedro Pablo Arriola Jiménez (20188)
+ *   - Marco Pablo Orozco Saravia (20857)
+ *   - Santiago Taracena Puga (20017)
+ */
+
 const fs = require('fs')
 const { list } = require('./list')
 
@@ -29,7 +39,7 @@ const drop_all = (regex) => {
       method: 'drop_all',
       status: 'warning',
       type: 'individual',
-      data: `No tables match regex "${regex}"`,
+      data: `No tables matched regex "${regex}"`,
     }
   }
 

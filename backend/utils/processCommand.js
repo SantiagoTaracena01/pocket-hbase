@@ -9,7 +9,7 @@ const { drop_all } = require('./drop_all')
 const { put } = require('./put')
 const { get } = require('./get')
 const { del } = require('./del')
-const { deleteall } = require('./deleteall')
+const { delete_all } = require('./deleteall')
 
 const processCommand = (command) => {
   const method = command.split(' ')[0]
@@ -66,8 +66,8 @@ const processCommand = (command) => {
     case 'delete':
       response = del(args[0], args[1], args.slice(2))
       break
-    case 'deleteall':
-      response = deleteall(args[0], args[1], args.slice(2))
+    case 'delete_all':
+      response = delete_all(args[0], args[1], args.slice(2))
       break
     default:
       response = {

@@ -1,7 +1,7 @@
 const fs = require('fs')
 const { list } = require('./list')
 
-const deleteall = (table, rowKey, args = []) => {
+const delete_all = (table, rowKey, args = []) => {
   const tables = list().data
 
   if (!tables.includes(table)) {
@@ -143,4 +143,4 @@ const deleteall = (table, rowKey, args = []) => {
   }
 }
 
-module.exports = { deleteall }
+module.exports = { delete_all }

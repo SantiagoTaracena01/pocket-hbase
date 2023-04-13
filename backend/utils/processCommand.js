@@ -11,9 +11,20 @@ const { get } = require('./get')
 const { del } = require('./del')
 const { delete_all } = require('./delete_all')
 
+const { METHODS } = require('./methods')
+
 const processCommand = (command) => {
   const method = command.split(' ')[0]
   const stringArgs = command.replace(`${method} `, '')
+
+  if (!METHODS.includes(method)) {
+    return {
+      method: 'none',
+      status: 'error',
+      type: 'individual',
+      data: `Method "${method}" not found`,
+    }
+  }
 
   if (method !== 'list' && method === stringArgs) {
     return {
@@ -74,7 +85,7 @@ const processCommand = (command) => {
         method: 'none',
         status: 'error',
         type: 'individual',
-        data: `Method "${method}" not found`,
+        data: 'Something went wrong...',
       }
       break
   }

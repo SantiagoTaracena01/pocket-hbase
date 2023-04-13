@@ -1,3 +1,13 @@
+/**
+ * Universidad del Valle de Guatemala
+ * (CC3089) Bases de Datos 2
+ * Proyecto 2 - Pocket HBase
+ * Miembros del grupo 7:
+ *   - Pedro Pablo Arriola Jiménez (20188)
+ *   - Marco Pablo Orozco Saravia (20857)
+ *   - Santiago Taracena Puga (20017)
+ */
+
 const fs = require('fs')
 const { list } = require('./list')
 
@@ -23,6 +33,16 @@ const disable = (table) => {
   })
 
   const json = JSON.parse(data)
+
+  if (!json.enabled) {
+    return {
+      method: 'disable',
+      status: 'warning',
+      type: 'individual',
+      data: `Table "${table}" is already disabled`,
+    }
+  }
+
   json.enabled = false
 
   fs.writeFile(path, JSON.stringify(json), (err) => {

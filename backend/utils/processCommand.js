@@ -9,7 +9,7 @@ const { drop_all } = require('./drop_all')
 const { put } = require('./put')
 const { get } = require('./get')
 const { del } = require('./del')
-const { delete_all } = require('./deleteall')
+const { delete_all } = require('./delete_all')
 
 const processCommand = (command) => {
   const method = command.split(' ')[0]

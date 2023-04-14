@@ -23,8 +23,6 @@ const put = (table, rowKey, columnInfo, value) => {
     }
   }
 
-  const [columnFamily, columnQualifier] = columnInfo.split(':')
-
   const path = `./public/hfile-table-${table}.json`
 
   const data = fs.readFileSync(path, 'utf8', (err, data) => {
@@ -44,6 +42,8 @@ const put = (table, rowKey, columnInfo, value) => {
       data: `Table "${table}" is disabled`,
     }
   }
+
+  const [columnFamily, columnQualifier] = columnInfo.split(':')
 
   if (!json.columnFamilies.includes(columnFamily)) {
     return {

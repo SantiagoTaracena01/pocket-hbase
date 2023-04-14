@@ -75,10 +75,10 @@ const processCommand = (command) => {
       response = get(args[0], args[1])
       break
     case 'delete':
-      response = del(args[0], args[1], args.slice(2))
+      response = del(args[0], args[1], args[2])
       break
     case 'delete_all':
-      response = delete_all(args[0], args[1], args.slice(2))
+      response = delete_all(args[0], args[1])
       break
     default:
       response = {

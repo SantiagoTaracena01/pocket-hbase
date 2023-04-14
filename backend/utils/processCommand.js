@@ -86,6 +86,7 @@ const processCommand = (command) => {
       break
     case 'describe':
       response = describe(args[0])
+      break
     default:
       response = {
         method: 'none',

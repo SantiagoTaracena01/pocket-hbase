@@ -43,7 +43,7 @@ const describe = (table) => {
     }
   }
 
-  return {
+  const response = {
     method: 'describe',
     status: 'ok',
     type: 'table',
@@ -55,6 +55,9 @@ const describe = (table) => {
       updated: json.updated,
     },
   };
+
+
+  return response
 };
 
 module.exports = { describe };

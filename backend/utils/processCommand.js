@@ -9,6 +9,7 @@ const { alter } = require('./alter')
 const { put } = require('./put')
 const { get } = require('./get')
 const { del } = require('./del')
+const { describe } = require('./describe')
 const { delete_all } = require('./delete_all')
 
 const { METHODS } = require('./methods')
@@ -83,6 +84,8 @@ const processCommand = (command) => {
     case 'alter':
       response = alter(args[0], args[1], args[2])
       break
+    case 'describe':
+      response = describe(args[0])
     default:
       response = {
         method: 'none',

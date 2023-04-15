@@ -48,9 +48,7 @@ const delete_all = (table, rowKey) => {
   const entriesToDelete = json.entries.filter(
     (entry) => entry.rowkey === rowKey
   )
-  const entriesToKeep = json.entries.filter(
-    (entry) => entry.rowkey !== rowKey
-  )
+  const entriesToKeep = json.entries.filter((entry) => entry.rowkey !== rowKey)
   json.entries = entriesToKeep
 
   fs.writeFile(path, JSON.stringify(json), (err) => {

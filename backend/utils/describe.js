@@ -8,11 +8,11 @@
  *   - Santiago Taracena Puga (20017)
  */
 
-const fs = require('fs');
-const { list } = require('./list');
+const fs = require('fs')
+const { list } = require('./list')
 
 const describe = (table) => {
-  const tables = list().data;
+  const tables = list().data
 
   if (!tables.includes(table)) {
     return {
@@ -20,19 +20,19 @@ const describe = (table) => {
       status: 'error',
       type: 'individual',
       data: `Table "\${table}" does not exist`,
-    };
+    }
   }
 
   const path = `./public/hfile-table-${table}.json`
 
   const data = fs.readFileSync(path, 'utf8', (err, data) => {
     if (err) {
-      console.error(err);
-      return;
+      console.error(err)
+      return
     }
-  });
+  })
 
-  const json = JSON.parse(data);
+  const json = JSON.parse(data)
 
   if (!json.enabled) {
     return {
@@ -54,10 +54,9 @@ const describe = (table) => {
       created: json.created,
       updated: json.updated,
     },
-  };
-
+  }
 
   return response
-};
+}
 
-module.exports = { describe };
+module.exports = { describe }

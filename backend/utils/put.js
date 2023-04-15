@@ -70,7 +70,6 @@ const put = (table, rowKey, columnInfo, value) => {
     entryToUpdate.value = value
     entryToUpdate.timestamp = new Date().getTime()
     json.entries.push(entryToUpdate)
-
   } else {
     entryToReturn = {
       rowkey: rowKey,

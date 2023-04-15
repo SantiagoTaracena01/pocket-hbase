@@ -8,11 +8,11 @@
  *   - Santiago Taracena Puga (20017)
  */
 
-const fs = require('fs');
-const { list } = require('./list');
+const fs = require('fs')
+const { list } = require('./list')
 
 const scan = (table, startRow = null, endRow = null) => {
-  const tables = list().data;
+  const tables = list().data
 
   if (!tables.includes(table)) {
     return {
@@ -20,14 +20,14 @@ const scan = (table, startRow = null, endRow = null) => {
       status: 'error',
       type: 'individual',
       data: `Table "\${table}" does not exist`,
-    };
+    }
   }
 
   const path = `./public/hfile-table-${table}.json`
 
   try {
-    const data = fs.readFileSync(path, 'utf8');
-    const json = JSON.parse(data);
+    const data = fs.readFileSync(path, 'utf8')
+    const json = JSON.parse(data)
 
     if (!json.enabled) {
       return {
@@ -35,50 +35,50 @@ const scan = (table, startRow = null, endRow = null) => {
         status: 'error',
         type: 'individual',
         data: `Table "\${table}" is disabled`,
-      };
+      }
     }
 
-    const entries = json.entries || [];
+    const entries = json.entries || []
 
-    const filteredEntries = entries.filter(entry => {
+    const filteredEntries = entries.filter((entry) => {
       if (startRow && entry.rowkey < startRow) {
-        return false;
+        return false
       }
       if (endRow && entry.rowkey > endRow) {
-        return false;
+        return false
       }
-      return true;
-    });
+      return true
+    })
 
     const results = filteredEntries.reduce((acc, entry) => {
       if (!acc[entry.rowkey]) {
-        acc[entry.rowkey] = {};
+        acc[entry.rowkey] = {}
       }
       if (!acc[entry.rowkey][entry.columnfamily]) {
-        acc[entry.rowkey][entry.columnfamily] = {};
+        acc[entry.rowkey][entry.columnfamily] = {}
       }
       acc[entry.rowkey][entry.columnfamily][entry.columnqualifier] = {
         value: entry.value,
         timestamp: entry.timestamp,
-      };
-      return acc;
-    }, {});
+      }
+      return acc
+    }, {})
 
     return {
       method: 'scan',
       status: 'ok',
       type: 'table',
       data: results,
-    };
+    }
   } catch (err) {
-    console.error(err);
+    console.error(err)
     return {
       method: 'scan',
       status: 'error',
       type: 'individual',
       data: `An error occurred while scanning the table "\${table}"`,
-    };
+    }
   }
-};
+}
 
-module.exports = { scan };
+module.exports = { scan }

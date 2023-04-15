@@ -25,6 +25,24 @@ const drop = (table) => {
 
   const path = `./public/hfile-table-${table}.json`
 
+  const data = fs.readFileSync(path, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+  })
+
+  const json = JSON.parse(data)
+
+  if (!json.enabled) {
+    return {
+      method: 'put',
+      status: 'error',
+      type: 'individual',
+      data: `Table "${table}" is disabled`,
+    }
+  }
+
   fs.unlinkSync(path)
 
   return {

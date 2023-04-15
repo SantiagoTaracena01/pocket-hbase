@@ -20,6 +20,17 @@ const drop_all = (regex) => {
   tables.forEach((table) => {
     if (re.test(table)) {
       let path = `./public/hfile-table-${table}.json`
+
+      let data = fs.readFileSync(path, 'utf8', (err, data) => {
+        if (err) {
+          console.error(err)
+          return
+        }
+      })
+
+      let json = JSON.parse(data)
+      if (!json.enabled) return
+
       fs.unlinkSync(path)
       count++
     }

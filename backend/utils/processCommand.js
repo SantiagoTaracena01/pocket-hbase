@@ -64,6 +64,9 @@ const processCommand = (command) => {
     case 'is_enabled':
       response = is_enabled(args[0])
       break
+    case 'alter':
+      response = alter(args[0], args[1], args[2], args[3])
+      break
     case 'drop':
       response = drop(args[0])
       break
@@ -81,9 +84,6 @@ const processCommand = (command) => {
       break
     case 'delete_all':
       response = delete_all(args[0], args[1])
-      break
-    case 'alter':
-      response = alter(args[0], args[1], args[2])
       break
     case 'describe':
       response = describe(args[0])

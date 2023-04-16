@@ -6,12 +6,13 @@ const { is_enabled } = require('./is_enabled')
 const { alter } = require('./alter')
 const { drop } = require('./drop')
 const { drop_all } = require('./drop_all')
+const { describe } = require('./describe')
 const { put } = require('./put')
 const { get } = require('./get')
-const { del } = require('./del')
-const { describe } = require('./describe')
-const { delete_all } = require('./delete_all')
 const { scan } = require('./scan')
+const { del } = require('./del')
+const { delete_all } = require('./delete_all')
+const { count } = require('./count')
 
 const { METHODS } = require('./methods')
 
@@ -73,11 +74,17 @@ const processCommand = (command) => {
     case 'drop_all':
       response = drop_all(args[0])
       break
+    case 'describe':
+      response = describe(args[0])
+      break
     case 'put':
       response = put(args[0], args[1], args[2], args[3])
       break
     case 'get':
       response = get(args[0], args[1])
+      break
+    case 'scan':
+      response = scan(args[0])
       break
     case 'delete':
       response = del(args[0], args[1], args[2])
@@ -85,11 +92,8 @@ const processCommand = (command) => {
     case 'delete_all':
       response = delete_all(args[0], args[1])
       break
-    case 'describe':
-      response = describe(args[0])
-      break
-    case 'scan':
-      response = scan(args[0], args[1], args[2])
+    case 'count':
+      response = count(args[0])
       break
     default:
       response = {

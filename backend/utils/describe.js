@@ -19,7 +19,7 @@ const describe = (table) => {
       method: 'describe',
       status: 'error',
       type: 'individual',
-      data: `Table "\${table}" does not exist`,
+      data: `Table "${table}" does not exist`,
     }
   }
 
@@ -46,7 +46,7 @@ const describe = (table) => {
   const response = {
     method: 'describe',
     status: 'ok',
-    type: 'table',
+    type: 'object',
     data: {
       name: json.tableName,
       columnFamilies: json.columnFamilies,

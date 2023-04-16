@@ -76,7 +76,7 @@ const scan = (table, startRow = null, endRow = null) => {
       method: 'scan',
       status: 'error',
       type: 'individual',
-      data: `An error occurred while scanning the table "\${table}"`,
+      data: `An error occurred while scanning the table "${table}"`,
     }
   }
 }

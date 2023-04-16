@@ -11,7 +11,7 @@
 const fs = require('fs')
 const { list } = require('./list')
 
-const scan = (table, startRow = null, endRow = null) => {
+const scan = (table) => {
   const tables = list().data
 
   if (!tables.includes(table)) {
@@ -19,65 +19,29 @@ const scan = (table, startRow = null, endRow = null) => {
       method: 'scan',
       status: 'error',
       type: 'individual',
-      data: `Table "\${table}" does not exist`,
+      data: `Table "${table}" does not exist`,
     }
   }
 
   const path = `./public/hfile-table-${table}.json`
 
-  try {
-    const data = fs.readFileSync(path, 'utf8')
-    const json = JSON.parse(data)
+  const data = fs.readFileSync(path, 'utf8')
+  const json = JSON.parse(data)
 
-    if (!json.enabled) {
-      return {
-        method: 'scan',
-        status: 'error',
-        type: 'individual',
-        data: `Table "\${table}" is disabled`,
-      }
-    }
-
-    const entries = json.entries || []
-
-    const filteredEntries = entries.filter((entry) => {
-      if (startRow && entry.rowkey < startRow) {
-        return false
-      }
-      if (endRow && entry.rowkey > endRow) {
-        return false
-      }
-      return true
-    })
-
-    const results = filteredEntries.reduce((acc, entry) => {
-      if (!acc[entry.rowkey]) {
-        acc[entry.rowkey] = {}
-      }
-      if (!acc[entry.rowkey][entry.columnfamily]) {
-        acc[entry.rowkey][entry.columnfamily] = {}
-      }
-      acc[entry.rowkey][entry.columnfamily][entry.columnqualifier] = {
-        value: entry.value,
-        timestamp: entry.timestamp,
-      }
-      return acc
-    }, {})
-
-    return {
-      method: 'scan',
-      status: 'ok',
-      type: 'table',
-      data: results,
-    }
-  } catch (err) {
-    console.error(err)
+  if (!json.enabled) {
     return {
       method: 'scan',
       status: 'error',
       type: 'individual',
-      data: `An error occurred while scanning the table "${table}"`,
+      data: `Table "${table}" is disabled`,
     }
+  }
+
+  return {
+    method: 'scan',
+    status: 'ok',
+    type: 'scan',
+    data: { entries: json.entries },
   }
 }
 

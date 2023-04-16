@@ -62,6 +62,27 @@ const Ouptut = ({ response, type }) => {
           </div>
         </div>
       )
+    case 'scan':
+      return (
+        <div className="output">
+          <div className="scan-table">
+            <div className="scan-titles">
+              <h1 className="scan-title">Row</h1>
+              <h1 className="scan-title">Column</h1>
+              <h1 className="scan-title">Value</h1>
+              <h1 className="scan-title">Timestamp</h1>
+            </div>
+            {response.data && response.data.entries.map((entry) => (
+              <React.Fragment>
+                <div className="scan-grid-item"><h2>{entry.rowkey}</h2></div>
+                <div className="scan-grid-item"><h2>{entry.columnfamily} : {entry.columnqualifier}</h2></div>
+                <div className="scan-grid-item"><h2>{entry.value}</h2></div>
+                <div className="scan-grid-item"><h2>{entry.timestamp}</h2></div>
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      )
     default:
       return (
         <div>Loading...</div>

@@ -15,22 +15,22 @@ const Ouptut = ({ response, type }) => {
         <div className="output">
           <div className="object-table">
             <div className="object-titles">
-              <h1>Name</h1>
-              <h1>Column Families</h1>
-              <h1>Enabled</h1>
-              <h1>Created</h1>
-              <h1>Updated</h1>
+              <h2>Name</h2>
+              <h2>Column Families</h2>
+              <h2>Enabled</h2>
+              <h2>Created</h2>
+              <h2>Updated</h2>
             </div>
             <div className="object-values">
-              <h1>{response.data.name}</h1>
-              <h1>{
+              <h2>{response.data.name}</h2>
+              <h2>{
                 (response.data.columnFamilies.toString().length < 200) ?
                   response.data.columnFamilies.toString() :
                   response.data.columnFamilies.toString().slice(0, 200) + '...'
-              }</h1>
-              <h1>{response.data.enabled.toString()}</h1>
-              <h1>{getFormattedDate(response.data.created)}</h1>
-              <h1>{getFormattedDate(response.data.updated)}</h1>
+              }</h2>
+              <h2>{response.data.enabled.toString()}</h2>
+              <h2>{getFormattedDate(response.data.created)}</h2>
+              <h2>{getFormattedDate(response.data.updated)}</h2>
             </div>
           </div>
         </div>

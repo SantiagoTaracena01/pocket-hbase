@@ -43,6 +43,15 @@ const alter = (table, type, columnFamily, newColumnFamily) => {
     }
   }
 
+  if (!type) {
+    return {
+      method: 'alter',
+      status: 'error',
+      type: 'individual',
+      data: `Type must be specified for alter operation`,
+    }
+  }
+
   if (!columnFamily) {
     return {
       method: 'alter',
@@ -62,6 +71,7 @@ const alter = (table, type, columnFamily, newColumnFamily) => {
           data: `Column family "${columnFamily}" already exists in table "${table}"`,
         }
       }
+
       json.columnFamilies.push(columnFamily)
       json.updated = new Date().getTime()
 

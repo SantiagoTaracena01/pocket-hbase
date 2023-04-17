@@ -7,7 +7,7 @@ const Ouptut = ({ response, type }) => {
     case 'individual':
       return (
         <div className="output">
-          <h1>{response.data}</h1>
+          <h2>{response.data}</h2>
         </div>
       )
     case 'object':
@@ -38,8 +38,11 @@ const Ouptut = ({ response, type }) => {
     case 'array':
       return (
         <div className="output">
+          <h1>Created tables</h1>
           {response.data && response.data.map((entry) => (
-            <h1>{entry}</h1>
+            <div className="list-entry">
+              <li>{entry}</li>
+            </div>
           ))}
         </div>
       )

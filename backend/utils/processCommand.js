@@ -13,6 +13,8 @@ const { scan } = require('./scan')
 const { del } = require('./del')
 const { delete_all } = require('./delete_all')
 const { count } = require('./count')
+const { truncate } = require('./truncate')
+const { put_many } = require('./put_many')
 
 const { METHODS } = require('./methods')
 
@@ -94,6 +96,12 @@ const processCommand = (command) => {
       break
     case 'count':
       response = count(args[0])
+      break
+    case 'truncate':
+      response = truncate(args[0])
+      break
+    case 'put_many':
+      response = put_many(args[0], args.slice(1))
       break
     default:
       response = {
